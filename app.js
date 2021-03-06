@@ -4,18 +4,23 @@ var currentValue;
 var values = [];
 var total = 0;
 
-//ARITHMETIC SYMBOLS
+//ARITHMETICS
 document.getElementById('+').addEventListener('click', () => {
+
+
     values.push(parseInt(currentValue))
-    currentValue = 0;
-    display.value = 0
-    //sumar todo lo que se va acumulando en values[]
+    display.value = ""
+    //display.value = currentValue //INVERSION A
+    currentValue = 0; 
     console.log(values)
-    if (values.length == 2) {
+    if (values.length == 1) {
+        total = values[0];
+    } else if (values.length == 2) {
         total = values[0] + values[1]
-    } else {
-        total += values[values.length - 1];   
+    } else if (values.length > 2) {
+        total += values[values.length - 1];
     }
+    display.value = total;
     console.log(total)
 
 })
@@ -36,8 +41,14 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                 display.value = ""
                 display.value += children
             } else {
-                display.value += children
-                currentValue = display.value
+                //NO SUMA DE A UN DÍGITO POR ALGUNA RAZON
+                  if(values[values.length -1] == display.value || display.value == total){
+                    display.value = "";
+                    display.value += children
+                  } else {
+                    display.value += children  
+                    currentValue = display.value//B, estoy teniendo una inversion 
+                }
             }
         }
     }
@@ -47,6 +58,8 @@ document.getElementById("on/c").addEventListener('click', () => {
     isOn = true;
     display.value = "0"
     if (isOn) {
+        total = 0;
+        values = [];
         console.log("prendido")
     }
 })
