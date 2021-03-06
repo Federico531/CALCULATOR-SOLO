@@ -7,22 +7,12 @@ var total = 0;
 //ARITHMETICS
 document.getElementById('+').addEventListener('click', () => {
 
-
+    currentValue = display.value
     values.push(parseInt(currentValue))
     display.value = ""
-    //display.value = currentValue //INVERSION A
-    currentValue = 0; 
-    console.log(values)
-    if (values.length == 1) {
-        total = values[0];
-    } else if (values.length == 2) {
-        total = values[0] + values[1]
-    } else if (values.length > 2) {
-        total += values[values.length - 1];
-    }
+    currentValue = 0;
+    total += values[values.length - 1];
     display.value = total;
-    console.log(total)
-
 })
 
 document.getElementById('-')
@@ -33,21 +23,19 @@ document.getElementById('')
 //NUMBER DISPLAY
 
 document.getElementById('calculator').addEventListener('click', (e) => {
-    children = e.target.childNodes[0].nodeValue
-    children = parseInt(children);
+    digit = e.target.childNodes[0].nodeValue
+    digit = parseInt(digit);
     if (isOn) {
-        if (!isNaN(children)) {
+        if (!isNaN(digit)) {
             if (display.value === "0") {
                 display.value = ""
-                display.value += children
+                display.value += digit
             } else {
-                //NO SUMA DE A UN DÍGITO POR ALGUNA RAZON
-                  if(values[values.length -1] == display.value || display.value == total){
+                if (values[values.length - 1] == display.value || display.value == total) {
                     display.value = "";
-                    display.value += children
-                  } else {
-                    display.value += children  
-                    currentValue = display.value//B, estoy teniendo una inversion 
+                    display.value += digit
+                } else {
+                    display.value += digit
                 }
             }
         }
