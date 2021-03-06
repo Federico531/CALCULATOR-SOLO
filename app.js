@@ -1,12 +1,18 @@
 const display = document.getElementById('display')
 var isOn = false
 var total;
+var currentValue;
+var values = [];
 
 //var arr = [];
 
 //ARITHMETIC SYMBOLS
 document.getElementById('+').addEventListener('click', () => {
-    
+    values.push(currentValue)
+    currentValue = 0;
+    display.value = "0"
+    //sumar todo lo que se va acumulando en values[]
+    console.log(values)
 })
 
 document.getElementById('-')
@@ -24,10 +30,9 @@ document.getElementById('calculator').addEventListener('click', (e) => {
             if (display.value == "0") {
                 display.value = ""
                 display.value += children
-                total = display.value
             } else {
                 display.value += children
-                total = display.value
+                currentValue = display.value
             }
         }
     }
