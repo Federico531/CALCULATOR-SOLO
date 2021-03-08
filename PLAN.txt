@@ -1,10 +1,28 @@
+TRABAJANDO EN EL BRANCH PARA QUE FUNCIONEN LAS CLASES
+
+FUNCION SUMAR:
+
+1-Recibe numero A
+2-Recibe Símbolo
+3-Recibe numero b
+4-Devuelve resultado y recibe numero y luego simbolo
+4-b devuelve resultado y recibe simbolo
+
+
 HACIENDO
+
 PROBLEMA:
 
-NO SUMA DE A UN DÍGITO, POR QUE? -> PORQUE TOTAL ESTABA CONDICIONADO --> VER
+-Si el último resultado es igual, sumar recien el numero que ingresamos y no el ultimo
+-Cuando toco en otro lado que no sea un simbolo aparece NaN en display.value
+-Que solo recuerde el ultimo simbolo válido que se toco y no cada cosa que se toco
+
+DEBERÍA HACER
 
 HACER 
--CALCULOS ARITMETICOS
+-CALCULOS ARITMETICOS EN CLASES (ya hice suma)
+-BOTON = RESUELVE LA OPERACION DEPENDIENDO EL ÚLTIMO SIMBOLO QUE SE TOCO (SWITCH)
+EJECUTA UNA FUNCION DE UNA CLASE
 -ESTIRAR BOTONES A GUSTO
 
 FUNCIONES:
@@ -14,6 +32,7 @@ ENCIENDA LA CALCULADORA
 -CTRL CALCULO? (BUENA IDEA, CON ARRAYS totals)  CTRL Z CALCULO
 
 HECHO
+-RESUELVE LA OPERACIÓN DE SUMAR CON IGUAl
 -SUMA Y REEMPLAZA LOS VALORES ANTERIORES EN DISPLAY SIN ALTERAR EL TOTAL
 -NO PERMITIR ESCRIBIR EN EL INPUT  
 BOTON REINICIAR --> ES EL MISMO QUE ON/C
