@@ -119,8 +119,10 @@ document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
         if (isNumber(digit)) {
-            anyDigit.push(digit)
-            numA = digit
+            console.log(anyDigit.length);
+
+            repeatsSymbol = false;
+
             console.log("isNumber")
             digit = parseInt(digit);
             if (display.value === "0") {
@@ -134,10 +136,21 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                     display.value += digit
                 }
             }
+            numA = display.value
         } else if (isSymbol(digit)) {
             anyDigit.push(digit)
-            //LASTSYMBOL DEVUELVE UNDEFINED POR ESO USO LA VARIABLE COMPLETA
-            if (isSymbol(anyDigit[anyDigit.length-1]) && anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=")) {
+
+            //---> RESOLVER ESTO<----
+            //SI PRESIONO UN MAS LUEGO DE UN NUMERO, QUE VIENE LUEGO DE OTRO MAS
+            // a. 1 + 2 + 3 --> no tiene nada de malo si el ultimo y el antepenultimo son +
+            // b. 1 + 2 + + --> el segundo + tiene que ser un numero u otro simbolo diferente
+
+            /*
+            if(!isNumber(anyDigit[anyDigit - 2])  ){
+
+            }
+            */
+            if (isSymbol(anyDigit[anyDigit.length - 1]) && anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=")) {
                 console.log('se repite simbolo')
                 console.log("digito" + digit)
                 console.log("simbolo" + symbol[symbol.length - 1])
