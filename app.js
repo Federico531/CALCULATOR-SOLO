@@ -119,6 +119,7 @@ document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
         if (isNumber(digit)) {
+            anyDigit.push(digit)
             numA = digit
             console.log("isNumber")
             digit = parseInt(digit);
@@ -134,21 +135,27 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                 }
             }
         } else if (isSymbol(digit)) {
+            anyDigit.push(digit)
             //LASTSYMBOL DEVUELVE UNDEFINED POR ESO USO LA VARIABLE COMPLETA
-            if (digit == symbol[symbol.length - 1] && !digit.includes("=")) {
-                console.log('ultimo simbolo igual')
+            if (isSymbol(anyDigit[anyDigit.length-1]) && anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=")) {
+                console.log('se repite simbolo')
+                console.log("digito" + digit)
+                console.log("simbolo" + symbol[symbol.length - 1])
+                console.log("ultimo digito" + anyDigit[anyDigit.length - 1])
+                console.log("anteultimo digito" + anyDigit[anyDigit.length - 2])
                 repeatsSymbol = true;
-                console.log(repeatsSymbol)
                 //if(repeatsSymbol) { NO se EJECUTAN LAS OPERACIONES}
                 //DEBERIA LIMPIAR symbols = [] SI EL OPERADOR ES DIFERENTE
-            } else if (digit !== symbol[symbol.length - 1] || digit.includes("=")) {
+            } else if (digit !== symbol[symbol.length - 1] || digit.includes("=") || anyDigit[anyDigit.length - 1 !== symbol[symbol.length - 1]]) {
                 console.log("no se repite el ultimo");
                 repeatsSymbol = false;
                 symbol.push(digit);
                 console.log(digit)
                 console.log("isSymbol")
-            } else if(digit.includes("=")){
-                
+                console.log("ultimo digito" + anyDigit[anyDigit.length - 1])
+                console.log("anteultimo digito" + anyDigit[anyDigit.length - 2])
+            } else if (digit.includes("=")) {
+
             }
         } else {
             console.log("NO ES UN BOTÓN")
