@@ -1,3 +1,25 @@
+/*COMO HACER COMPORTAR A = AL PRESIONARLO 2 VECES SEGUIDAS 
+
+HACER QUE = SE COMPORTE ASI
+numA operator numB  =  total
+1       +       2   =    3
+
+total + numB = total
+  3   +  2   =   5
+if(anydigit[anydigit.length - 1].includes("=") && anydigit[anydigit.length - 2].includes("=")){
+    numA = total;
+    total = total + numB
+}
+
+= 5    (+2)
+= 7    (+2)
+= 9    (+2)
+= 11   (+2)
+= 13   (+2)
+= 15   (+2)
+
+
+*/
 const display = document.getElementById('display')
 var isOn = false
 var currentValue;
@@ -19,12 +41,11 @@ var operatore;
     //HACER NADA
 }
 */
-function operator(e) {
-    operatore = e;
-    return operatore
-}
+
 //BOCETO DE OPERATION
 function operation(a, operator, b) {
+
+    //Si el 
     if (!operator && !b) {
         numA = a;
     } else if (!b) {
@@ -33,7 +54,7 @@ function operation(a, operator, b) {
         var numB = b;
     }
     if (operator == "+") {
-        return a * b
+
     }
 }
 class Operation {
@@ -119,8 +140,6 @@ document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
         if (isNumber(digit)) {
-            console.log(anyDigit.length);
-
             repeatsSymbol = false;
 
             console.log("isNumber")
@@ -151,22 +170,10 @@ document.getElementById('calculator').addEventListener('click', (e) => {
             }
             */
             if (isSymbol(anyDigit[anyDigit.length - 1]) && anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=")) {
-                console.log('se repite simbolo')
-                console.log("digito" + digit)
-                console.log("simbolo" + symbol[symbol.length - 1])
-                console.log("ultimo digito" + anyDigit[anyDigit.length - 1])
-                console.log("anteultimo digito" + anyDigit[anyDigit.length - 2])
                 repeatsSymbol = true;
-                //if(repeatsSymbol) { NO se EJECUTAN LAS OPERACIONES}
-                //DEBERIA LIMPIAR symbols = [] SI EL OPERADOR ES DIFERENTE
             } else if (digit !== symbol[symbol.length - 1] || digit.includes("=") || anyDigit[anyDigit.length - 1 !== symbol[symbol.length - 1]]) {
-                console.log("no se repite el ultimo");
                 repeatsSymbol = false;
                 symbol.push(digit);
-                console.log(digit)
-                console.log("isSymbol")
-                console.log("ultimo digito" + anyDigit[anyDigit.length - 1])
-                console.log("anteultimo digito" + anyDigit[anyDigit.length - 2])
             } else if (digit.includes("=")) {
 
             }
@@ -219,19 +226,3 @@ document.getElementById("OFF").addEventListener('click', () => {
         console.log("apagado")
     }
 })
-
-
-//CODIGO DE PRUEBA (BOCETOS)
-//SI REPITE SIMBOLO NO HACER NADA Y REASIGNAR SIMBOLO PARA QUE??
-/*
-if (isSymbol(digit) || isNumber(digit)) {
-    if (lastSymbol == beforeLastSymbol) {
-        //DO NOTHING
-    } else {
-        operator = lastSymbol
-        //si es diferente va a asignar la operacion
-        //deberia esperar un segundo numero para ejecutar resultado
-    }
-}
-
-*/
