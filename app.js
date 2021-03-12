@@ -135,6 +135,11 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                 display.value = ""
                 display.value += digit
             } else {
+                /*BUG
+                a- Cuando trato de escribir 11 + 111 --> se borra al 3er numero
+                b- porque se cumple la condicion abajo porque
+                c- en la operación sum se asigna y se mezclan los 3 valores
+                */
                 if (values[values.length - 1] == display.value || display.value == total) {
                     display.value = "";
                     display.value += digit
@@ -147,8 +152,9 @@ document.getElementById('calculator').addEventListener('click', (e) => {
         } else if (isSymbol(digit)) {
             if (anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=") || symbol.length < 2 && digit == symbol[symbol.length - 1]) {
                 repeatsSymbol = true;
-    
+                
             } else if (digit !== symbol[symbol.length - 1] || digit.includes("=") || anyDigit[anyDigit.length - 1 !== symbol[symbol.length - 1]]) {
+                
                 anyDigit.push(digit)
                 symbol.push(digit);
                 repeatsSymbol = false;
