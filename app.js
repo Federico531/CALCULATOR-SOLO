@@ -20,6 +20,7 @@ if(anydigit[anydigit.length - 1].includes("=") && anydigit[anydigit.length - 2].
 
 
 */
+
 const display = document.getElementById('display')
 var isOn = false
 var currentValue;
@@ -29,7 +30,6 @@ var symbol = [];
 var repeatsSymbol = false;
 var lastSymbol = symbol[symbol.length - 1];
 var anyDigit = [];
-
 var numA;
 var numB;
 var operatore;
@@ -44,7 +44,6 @@ var operatore;
 
 //BOCETO DE OPERATION
 function operation(a, operator, b) {
-
     //Si el 
     if (!operator && !b) {
         numA = a;
@@ -54,13 +53,11 @@ function operation(a, operator, b) {
         var numB = b;
     }
     if (operator == "+") {
-
     }
 }
+
 class Operation {
-
     sum() {
-
         //BOCETO DEL CONDITIONAL
         if (numA) {
             operatore = "+" //crear variable operator
@@ -75,11 +72,6 @@ class Operation {
             numB = numA;
             numA = "";//DO NOTHING
         }
-        //si toco 2 veces + hace display.value += total (por que?) 
-        //Una calculadora normal si toco 2 veces + a la segunda no hace nada
-        //HACER ESTO SI ENTRA EN EL IF
-
-
     }
     substract() {
     }
@@ -88,7 +80,6 @@ class Operation {
     divide() {
     }
     equals() {
-
     }
 }
 
@@ -96,11 +87,10 @@ class Operation {
 document.getElementById('+').addEventListener('click', () => {
     const operation = new Operation();
     if (repeatsSymbol) {
-
+        console.log("hacer nada")
     } else {
         operation.sum();
     }
-
 })
 document.getElementById('-')
 document.getElementById('/')
@@ -109,9 +99,6 @@ document.getElementById('%')
 
 document.getElementById('=').addEventListener('click', () => {
     const operation = new Operation();
-
-    //NO REGISTRA BIEN SI EL ULTIMO SIMBOLO SE REPITIO, Y SIEMPRE SALTA AL SWITCH
-
 
     console.log('inside the switch LASTsymbol' + symbol[symbol.length - 1]);
 
@@ -140,9 +127,9 @@ document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
         if (isNumber(digit)) {
-            repeatsSymbol = false;
 
-            console.log("isNumber")
+            //FUNCTION TYPENUMBER
+            repeatsSymbol = false;
             digit = parseInt(digit);
             if (display.value === "0") {
                 display.value = ""
@@ -156,26 +143,18 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                 }
             }
             numA = display.value
+
         } else if (isSymbol(digit)) {
-            anyDigit.push(digit)
-
-            //---> RESOLVER ESTO<----
-            //SI PRESIONO UN MAS LUEGO DE UN NUMERO, QUE VIENE LUEGO DE OTRO MAS
-            // a. 1 + 2 + 3 --> no tiene nada de malo si el ultimo y el antepenultimo son +
-            // b. 1 + 2 + + --> el segundo + tiene que ser un numero u otro simbolo diferente
-
-            /*
-            if(!isNumber(anyDigit[anyDigit - 2])  ){
-
-            }
-            */
-            if (isSymbol(anyDigit[anyDigit.length - 1]) && anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=")) {
+            if (anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=") || symbol.length < 2 && digit == symbol[symbol.length - 1]) {
                 repeatsSymbol = true;
+    
             } else if (digit !== symbol[symbol.length - 1] || digit.includes("=") || anyDigit[anyDigit.length - 1 !== symbol[symbol.length - 1]]) {
-                repeatsSymbol = false;
+                anyDigit.push(digit)
                 symbol.push(digit);
-            } else if (digit.includes("=")) {
+                repeatsSymbol = false;
 
+            } else if (digit.includes("=")) {
+                //TAL VEZ ESTA FUNCION NO SIRVA DE NADA
             }
         } else {
             console.log("NO ES UN BOTÓN")
@@ -194,7 +173,7 @@ function isNumber(digit) {
 }
 
 function isSymbol(digit) {
-
+    //crep que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
     const sums = digit.includes("+");
     const substracts = digit.includes("-");
     const multiplies = digit.includes("X");
