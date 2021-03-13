@@ -1,3 +1,25 @@
+/*
+FIX THIS BUGS!!
+"" when I press the button
+() --> result
+A.  2 "+" 2 "=" (4) "+" (8) "=" (16)
+                    "+" Should take new input and add when new operation is entered
+                            "=" Is repeating last operation ("+") 
+B. 2 "+" "=" (4) "+" (8)
+          <--OK  "+" Should take new input and sum it with previous total   
+
+IS NOT BUG
+C. 2 "+" "=" (4) 
+D. 2 "+" 2 "+" (4) "+" "=" (8) "="  "=" alert(=)
+                     <--OK "="           
+
+*/
+/*
+REFACTOR -->Cuando tengo que cambiar variable symbola a operation,
+tengo que cambiarla en todos lados porque entra siempre como variable global
+en vez de como parametro de una funcion
+*/
+
 /*COMO HACER COMPORTAR A = AL PRESIONARLO 2 VECES SEGUIDAS 
 
 HACER QUE = SE COMPORTE ASI
@@ -18,9 +40,7 @@ if(anydigit[anydigit.length - 1].includes("=") && anydigit[anydigit.length - 2].
 = 13   (+2)
 = 15   (+2)
 
-
 */
-
 const display = document.getElementById('display')
 var isOn = false
 var currentValue;
@@ -28,19 +48,28 @@ var values = [];
 var total = 0;
 var symbol = [];
 var repeatsSymbol = false;
+//Refactor values not asigned 
 var lastSymbol = symbol[symbol.length - 1];
 var anyDigit = [];
+//Global params of operation() --> REFACTOR 
 var numA;
 var numB;
 var operatore;
 
 //SI EL ANTEULTIMO SIMBOLO EXISTE Y ES IGUAL AL ULTIMO SIMBOLO, DEJAR TODO IGUAL
 //SI ES DIFERENTE, Y EXISTEN MAS DE DOS SIMBOLOS EN SIMBOLO, ASIGNAR EL SIMBOLO A OPERATOR
-/*
-    if(symbol[symbol.length - 2]symbol[symbol.length - 2] == lastSymbol){
+
+//DONDE IRIA ESTE CODIGO?
+// EN ('=') PODRIA IR (PODRIA VOLVERSE UNA FUNCION LUEGO PARA NO REPETIR EL CODIGO)
+// 
+//
+
+if (symbol[symbol.length - 2] == symbol[symbol.length - 1]) {
     //HACER NADA
+} else if (symbol[symbol.length - 2] != symbol[symbol.lenth - 1] && symbol.length > 2) {
+    //REALIZAR LA OPERACIÓN QUE CORRESPONDA AL ULTIMO SIMBOLO
 }
-*/
+
 
 //BOCETO DE OPERATION
 function operation(a, operator, b) {
@@ -59,6 +88,8 @@ function operation(a, operator, b) {
 class Operation {
     sum() {
         //BOCETO DEL CONDITIONAL
+        symbol.push("+");
+
         if (numA) {
             operatore = "+" //crear variable operator
             operation(numA, operatore) //cuando queremos ejecutar la funcion
@@ -80,6 +111,10 @@ class Operation {
     divide() {
     }
     equals() {
+        console.log(symbol.length)
+        if(symbol[symbol.length - 1].includes("+")){
+            this.sum()
+        }
     }
 }
 
@@ -101,7 +136,9 @@ document.getElementById('=').addEventListener('click', () => {
     const operation = new Operation();
 
     console.log('inside the switch LASTsymbol' + symbol[symbol.length - 1]);
-
+    /*
+    Cuando toco dos veces equals repite la ultima operación diferente a equals 
+    */
     switch (true) {
         case symbol[symbol.length - 1].includes("+"): operation.sum();
             break;
@@ -113,7 +150,7 @@ document.getElementById('=').addEventListener('click', () => {
             break;
         case symbol[symbol.length - 1].includes("%"): alert('es un porcentaje!');
             break;
-        case symbol[symbol.length - 1].includes("="): alert('es un igual!');
+        case symbol[symbol.length - 1].includes("="): operation.equals();
             break;
         default: alert('no es un simbolo valido');
     }
@@ -152,9 +189,9 @@ document.getElementById('calculator').addEventListener('click', (e) => {
         } else if (isSymbol(digit)) {
             if (anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=") || symbol.length < 2 && digit == symbol[symbol.length - 1]) {
                 repeatsSymbol = true;
-                
+
             } else if (digit !== symbol[symbol.length - 1] || digit.includes("=") || anyDigit[anyDigit.length - 1 !== symbol[symbol.length - 1]]) {
-                
+
                 anyDigit.push(digit)
                 symbol.push(digit);
                 repeatsSymbol = false;
