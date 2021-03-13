@@ -133,6 +133,7 @@ class Operation {
 //ARITHMETICS
 document.getElementById('+').addEventListener('click', () => {
     const operation = new Operation();
+
     if (repeatsSymbol) {
         console.log("hacer nada")
     } else {
@@ -154,11 +155,11 @@ document.getElementById('=').addEventListener('click', () => {
     //if (anyanyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
 
 
-    if (anyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
+    if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
         repeatsEqual = true;
         console.log("repite igual")
     }
-    console.log(currentOperation)
+    console.log("esto es current operation" + currentOperation)
     /*
     Cuando toco dos veces equals repite la ultima operación diferente a equals 
     */
