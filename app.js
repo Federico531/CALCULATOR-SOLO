@@ -1,11 +1,19 @@
 /*
-FIX THIS BUGS!!
+
 "" when I press the button
 () --> result
+FIX THIS BUGS!!
+
 A.  2 "+" 2 "=" (4) "+" (8) "=" (16)
                     "+" Should take new input and add when new operation is entered
-                            "=" Is repeating last operation ("+") 
-B. 2 "+" "=" (4) "+" (8)
+                            "=" Is repeating last operation ("+")
+*/
+//DONDE EJECUTAMOS ESTO?
+//EN operation.equal o en click.("=")??
+
+
+/*
+                            B. 2 "+" "=" (4) "+" (8)
           <--OK  "+" Should take new input and sum it with previous total   
 
 IS NOT BUG
@@ -44,10 +52,12 @@ if(anydigit[anydigit.length - 1].includes("=") && anydigit[anydigit.length - 2].
 const display = document.getElementById('display')
 var isOn = false
 var currentValue;
+var currentOperation;
 var values = [];
 var total = 0;
 var symbol = [];
 var repeatsSymbol = false;
+var repeatsEqual = false;
 //Refactor values not asigned 
 var lastSymbol = symbol[symbol.length - 1];
 var anyDigit = [];
@@ -87,9 +97,10 @@ function operation(a, operator, b) {
 
 class Operation {
     sum() {
-        //BOCETO DEL CONDITIONAL
-        symbol.push("+");
 
+        //BOCETO DEL CONDITIONAL
+        if (repeatsEqual)
+            symbol.push("+");
         if (numA) {
             operatore = "+" //crear variable operator
             operation(numA, operatore) //cuando queremos ejecutar la funcion
@@ -111,8 +122,9 @@ class Operation {
     divide() {
     }
     equals() {
+
         console.log(symbol.length)
-        if(symbol[symbol.length - 1].includes("+")){
+        if (symbol[symbol.length - 1].includes("+")) {
             this.sum()
         }
     }
@@ -134,26 +146,38 @@ document.getElementById('%')
 
 document.getElementById('=').addEventListener('click', () => {
     const operation = new Operation();
+    anyDigit.push('=')
+    //ESTO ESTA MAL PORQUE NO HABRIAMOS ENTRADO ACA DE NO SER POR UN PRIMER CLICK EN =
+    //PENSARLO BIEN
+    //SI EL ULTIMO SIMBOLO NO ES = GUARDAMOS EN LA CONSTANTE
 
-    console.log('inside the switch LASTsymbol' + symbol[symbol.length - 1]);
+    //if (anyanyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
+
+
+    if (anyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
+        repeatsEqual = true;
+        console.log("repite igual")
+    }
+    console.log(currentOperation)
     /*
     Cuando toco dos veces equals repite la ultima operación diferente a equals 
     */
     switch (true) {
-        case symbol[symbol.length - 1].includes("+"): operation.sum();
+        case currentOperation.includes("+"): operation.sum();
             break;
-        case symbol[symbol.length - 1].includes("-"): alert('es una resta!');
+        case currentOperation.includes("-"): alert('es una resta!');
             break;
-        case symbol[symbol.length - 1].includes("X"): alert('es una multiplicación!');
+        case currentOperation.includes("X"): alert('es una multiplicación!');
             break;
-        case symbol[symbol.length - 1].includes("/"): alert('es una division!');
+        case currentOperation.includes("/"): alert('es una division!');
             break;
-        case symbol[symbol.length - 1].includes("%"): alert('es un porcentaje!');
+        case currentOperation.includes("%"): alert('es un porcentaje!');
             break;
-        case symbol[symbol.length - 1].includes("="): operation.equals();
+        case currentOperation.includes("="): operation.equals();
             break;
         default: alert('no es un simbolo valido');
     }
+    //}
     display.value = total;
 
 })
@@ -164,10 +188,10 @@ document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
         if (isNumber(digit)) {
-
             //FUNCTION TYPENUMBER
             repeatsSymbol = false;
             digit = parseInt(digit);
+
             if (display.value === "0") {
                 display.value = ""
                 display.value += digit
@@ -187,17 +211,19 @@ document.getElementById('calculator').addEventListener('click', (e) => {
             numA = display.value
 
         } else if (isSymbol(digit)) {
-            if (anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=") || symbol.length < 2 && digit == symbol[symbol.length - 1]) {
+
+
+            if (anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=") && digit == symbol[symbol.length - 1]) {
+                console.log("repitio")
                 repeatsSymbol = true;
 
-            } else if (digit !== symbol[symbol.length - 1] || digit.includes("=") || anyDigit[anyDigit.length - 1 !== symbol[symbol.length - 1]]) {
+            } else if (!symbol || digit !== symbol[symbol.length - 1] || anyDigit[anyDigit.length - 1] !== symbol[symbol.length - 1] && !digit.includes("=")) {
 
-                anyDigit.push(digit)
-                symbol.push(digit);
-                repeatsSymbol = false;
+                symbol.push(digit)
+                currentOperation = symbol[symbol.length - 1];
 
             } else if (digit.includes("=")) {
-                //TAL VEZ ESTA FUNCION NO SIRVA DE NADA
+
             }
         } else {
             console.log("NO ES UN BOTÓN")
