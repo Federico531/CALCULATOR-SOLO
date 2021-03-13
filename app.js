@@ -58,9 +58,11 @@ var total = 0;
 var symbol = [];
 var repeatsSymbol = false;
 var repeatsEqual = false;
+var wasEqualBefore = false;
 //Refactor values not asigned 
 var lastSymbol = symbol[symbol.length - 1];
 var anyDigit = [];
+
 //Global params of operation() --> REFACTOR 
 var numA;
 var numB;
@@ -104,16 +106,13 @@ class Operation {
         if (numA) {
             operatore = "+" //crear variable operator
             operation(numA, operatore) //cuando queremos ejecutar la funcion
-            currentValue = display.value
-            values.push(parseInt(currentValue))
+
+            values.push(parseInt(numA))
             display.value = total;
             currentValue = 0;
             total += values[values.length - 1]; //ESTO DELEGARLO a operation()
             display.value = total;
-        } else if (operator == "+") {
-            numB = numA;
-            numA = "";//DO NOTHING
-        }
+        } 
     }
     substract() {
     }
@@ -133,8 +132,31 @@ class Operation {
 //ARITHMETICS
 document.getElementById('+').addEventListener('click', () => {
     const operation = new Operation();
+/*
+    if (anyDigit[anyDigit.length - 1] && anyDigit[anyDigit.length - 2].includes("+")) {
+        console.log("el ultimo fue un igual por tanto aceptamos otro numero normalmente")
+        repeatsSymbol = true;
 
-    if (repeatsSymbol) {
+        if (symbol[symbol.length - 1].includes("+")){
+            console.log("reasignamos")
+        }
+    }
+ */   
+
+    if(anyDigit[anyDigit.length-2] && anyDigit[anyDigit.length - 2].includes("=") ){
+        wasEqualBefore = true;
+        console.log("antes del mas hubo un igual entonces no hacer nada")
+
+    }
+    if(wasEqualBefore){
+        console.log("este es el as luego de igual")
+        numA = currentValue
+        console.log(numA)
+    }else{
+        wasEqualBefore = false
+    }
+
+    if (repeatsSymbol && wasEqualBefore) {
         console.log("hacer nada")
     } else {
         operation.sum();
@@ -158,11 +180,16 @@ document.getElementById('=').addEventListener('click', () => {
     if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
         repeatsEqual = true;
         console.log("repite igual")
+        //ACA DEBERIA REASIGNAR NUM Y REPETIR HACER TOTAL OPERATOR NUMA = TOTAL 
+        //"1" "+" "1" "=" (2) "=" (3) "=" (4    )
+
     }
     console.log("esto es current operation" + currentOperation)
     /*
     Cuando toco dos veces equals repite la ultima operación diferente a equals 
     */
+    symbol.push("=")
+
     switch (true) {
         case currentOperation.includes("+"): operation.sum();
             break;
@@ -207,12 +234,13 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                     display.value += digit
                 } else {
                     display.value += digit
+                    anyDigit.push(display.value)
                 }
             }
             numA = display.value
 
         } else if (isSymbol(digit)) {
-
+            anyDigit.push(digit)
 
             if (anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=") && digit == symbol[symbol.length - 1]) {
                 console.log("repitio")
@@ -224,7 +252,7 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                 currentOperation = symbol[symbol.length - 1];
 
             } else if (digit.includes("=")) {
-
+                
             }
         } else {
             console.log("NO ES UN BOTÓN")
