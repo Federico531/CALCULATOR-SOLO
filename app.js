@@ -4,15 +4,17 @@
 () --> result
 FIX THIS BUGS!!
 
-A.  2 "+" 2 "=" (4) "+" (8) "=" (16)
-                    "+" Should take new input and add when new operation is entered
-                            "=" Is repeating last operation ("+")
-*/
+B- FUNCIONA ASI           "2" "+" "3" "=" (5) "4" "=" (9)
+                                    -->5 + 4 (MAL)
+
+DEBERIA FUNCIONAR ASI  "2" "+" "3" "=" (5) "4" "=" (7)
+                                        --> 4 + 3 (Es decir que numB hace la misma operación sobre el nuevo numero)
+                                        --> Y siempre que presione "=" "numero" se genera esta sustitución 
+
 //DONDE EJECUTAMOS ESTO?
 //EN operation.equal o en click.("=")??
 
 
-/*
                             B. 2 "+" "=" (4) "+" (8)
           <--OK  "+" Should take new input and sum it with previous total   
 
@@ -28,27 +30,6 @@ tengo que cambiarla en todos lados porque entra siempre como variable global
 en vez de como parametro de una funcion
 */
 
-/*COMO HACER COMPORTAR A = AL PRESIONARLO 2 VECES SEGUIDAS 
-
-HACER QUE = SE COMPORTE ASI
-numA operator numB  =  total
-1       +       2   =    3
-
-total + numB = total
-  3   +  2   =   5
-if(anydigit[anydigit.length - 1].includes("=") && anydigit[anydigit.length - 2].includes("=")){
-    numA = total;
-    total = total + numB
-}
-
-= 5    (+2)
-= 7    (+2)
-= 9    (+2)
-= 11   (+2)
-= 13   (+2)
-= 15   (+2)
-
-*/
 const display = document.getElementById('display')
 var isOn = false
 var currentValue;
@@ -107,9 +88,9 @@ class Operation {
 
         */
 
-        if (numA) {
-            operatore = "+" //crear variable operator
-            operation(numA, operatore) //cuando queremos ejecutar la funcion
+        if (numA && !repeatsSymbol) {
+            //   operatore = "+" //crear variable operator
+            //   operation(numA, operatore) //cuando queremos ejecutar la funcion
 
             values.push(parseInt(numA))
             display.value = total;
@@ -145,7 +126,7 @@ document.getElementById('+').addEventListener('click', () => {
 
         //REDUNDANTE Y MAL PORQUE DE POR SI SI ENTRAMOS ACA HABRIA SIDO PUSHEADO EL SIMBOLO
         if (symbol[symbol.length - 1].includes("+")) {
-            console.log("reasignamos")
+
         }
     } else if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("=")) {
         wasEqualBefore = true;
@@ -195,7 +176,7 @@ document.getElementById('=').addEventListener('click', () => {
         //ACA DEBERIA REASIGNAR NUM Y REPETIR HACER TOTAL OPERATOR NUMA = TOTAL 
         //"1" "+" "1" "=" (2) "=" (3) "=" (4    )
 
-    }else{
+    } else {
         repeatsEqual = false; //no se si sirve, por las dudas tengamoslo mano
     }
     console.log("esto es current operation" + currentOperation)
@@ -247,27 +228,28 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                     display.value += digit
                 } else {
                     display.value += digit
-                    anyDigit.push(display.value)
                 }
             }
             numA = display.value
+            anyDigit.push(numA);
 
         } else if (isSymbol(digit)) {
-            anyDigit.push(digit)
+            if (!digit.includes("=")) {
+                anyDigit.push(digit);
+                symbol.push(digit)
+                console.log("incluimos este simbolo" + symbol[symbol.length - 1])
+                currentOperation = symbol[symbol.length - 1];
+            }else{
+                anyDigit.push(digit);
+            }
 
-            if (anyDigit[anyDigit.length - 1] == anyDigit[anyDigit.length - 2] && !digit.includes("=") && digit == symbol[symbol.length - 1]) {
+            if (symbol[symbol.length - 1] == symbol[symbol.length - 2] && !digit.includes("=") && digit == symbol[symbol.length - 1]) {
                 console.log("repitio")
                 repeatsSymbol = true;
 
             } else if (!symbol || digit !== symbol[symbol.length - 1] || anyDigit[anyDigit.length - 1] !== symbol[symbol.length - 1]) {
 
-                if (!digit.includes("=")) {
-                    symbol.push(digit)
-                    console.log("incluimos este simbolo" + symbol[symbol.length - 1])
-                    currentOperation = symbol[symbol.length - 1];
-                } else {
-                    console.log("no hicimos nada porque era un =")
-                }
+
             }
         } else {
             console.log("NO ES UN BOTÓN")
