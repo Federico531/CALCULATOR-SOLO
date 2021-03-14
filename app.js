@@ -101,8 +101,12 @@ class Operation {
     sum() {
 
         //BOCETO DEL CONDITIONAL
-        if (repeatsEqual)
-            symbol.push("+");
+        /*
+
+        ACA IRIA EL CODIGO QUE REASIGNA if repeats equal numA
+
+        */
+
         if (numA) {
             operatore = "+" //crear variable operator
             operation(numA, operatore) //cuando queremos ejecutar la funcion
@@ -112,7 +116,7 @@ class Operation {
             currentValue = 0;
             total += values[values.length - 1]; //ESTO DELEGARLO a operation()
             display.value = total;
-        } 
+        }
     }
     substract() {
     }
@@ -132,35 +136,43 @@ class Operation {
 //ARITHMETICS
 document.getElementById('+').addEventListener('click', () => {
     const operation = new Operation();
-/*
-    if (anyDigit[anyDigit.length - 1] && anyDigit[anyDigit.length - 2].includes("+")) {
+
+    wasEqualBefore = false;
+
+    if (anyDigit[anyDigit.length - 1] && anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("+") && anyDigit[anyDigit.length - 1].includes("+")) {
         console.log("el ultimo fue un igual por tanto aceptamos otro numero normalmente")
         repeatsSymbol = true;
 
-        if (symbol[symbol.length - 1].includes("+")){
+        //REDUNDANTE Y MAL PORQUE DE POR SI SI ENTRAMOS ACA HABRIA SIDO PUSHEADO EL SIMBOLO
+        if (symbol[symbol.length - 1].includes("+")) {
             console.log("reasignamos")
         }
-    }
- */   
-
-    if(anyDigit[anyDigit.length-2] && anyDigit[anyDigit.length - 2].includes("=") ){
+    } else if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("=")) {
         wasEqualBefore = true;
-        console.log("antes del mas hubo un igual entonces no hacer nada")
+        console.log("Before + there was =")
 
     }
-    if(wasEqualBefore){
-        console.log("este es el as luego de igual")
+
+    // operation.sum
+
+    //YA SE ESTA REASIGNANDO BIEN EL ULTIMO NUMERO
+    // ESTE CODIGO VA DENTRO DE OPERATION.SUM O ESTA BIEN ACA? YA QUE BLOQUEA SUM DE HACER ALGO Y REASIGNA EL VALOR
+    //O NO REASIGNA NADA? VER BIEN
+    if (wasEqualBefore) {
+        console.log("total +=  Last value entered after +")
         numA = currentValue
-        console.log(numA)
-    }else{
-        wasEqualBefore = false
-    }
-
-    if (repeatsSymbol && wasEqualBefore) {
-        console.log("hacer nada")
+        console.log("Este es el operando que se recicla " + numA)
+        if (repeatsSymbol) {
+            console.log("hacer nada")
+        } else {
+        }
     } else {
+        wasEqualBefore = false
         operation.sum();
     }
+    wasEqualBefore = false
+
+
 })
 document.getElementById('-')
 document.getElementById('/')
@@ -183,12 +195,13 @@ document.getElementById('=').addEventListener('click', () => {
         //ACA DEBERIA REASIGNAR NUM Y REPETIR HACER TOTAL OPERATOR NUMA = TOTAL 
         //"1" "+" "1" "=" (2) "=" (3) "=" (4    )
 
+    }else{
+        repeatsEqual = false; //no se si sirve, por las dudas tengamoslo mano
     }
     console.log("esto es current operation" + currentOperation)
     /*
     Cuando toco dos veces equals repite la ultima operación diferente a equals 
     */
-    symbol.push("=")
 
     switch (true) {
         case currentOperation.includes("+"): operation.sum();
@@ -201,7 +214,7 @@ document.getElementById('=').addEventListener('click', () => {
             break;
         case currentOperation.includes("%"): alert('es un porcentaje!');
             break;
-        case currentOperation.includes("="): operation.equals();
+        case anydigit[anyDigit.length - 1].includes("="): operation.equals();
             break;
         default: alert('no es un simbolo valido');
     }
@@ -246,13 +259,15 @@ document.getElementById('calculator').addEventListener('click', (e) => {
                 console.log("repitio")
                 repeatsSymbol = true;
 
-            } else if (!symbol || digit !== symbol[symbol.length - 1] || anyDigit[anyDigit.length - 1] !== symbol[symbol.length - 1] && !digit.includes("=")) {
+            } else if (!symbol || digit !== symbol[symbol.length - 1] || anyDigit[anyDigit.length - 1] !== symbol[symbol.length - 1]) {
 
-                symbol.push(digit)
-                currentOperation = symbol[symbol.length - 1];
-
-            } else if (digit.includes("=")) {
-                
+                if (!digit.includes("=")) {
+                    symbol.push(digit)
+                    console.log("incluimos este simbolo" + symbol[symbol.length - 1])
+                    currentOperation = symbol[symbol.length - 1];
+                } else {
+                    console.log("no hicimos nada porque era un =")
+                }
             }
         } else {
             console.log("NO ES UN BOTÓN")
