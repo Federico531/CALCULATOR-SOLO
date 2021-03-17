@@ -57,6 +57,7 @@ var operatore;
 // 
 //
 
+//NO REALICE ESTA ACCIÓN YA? REVISAR
 if (symbol[symbol.length - 2] == symbol[symbol.length - 1]) {
     //HACER NADA
 } else if (symbol[symbol.length - 2] != symbol[symbol.lenth - 1] && symbol.length > 2) {
@@ -100,6 +101,17 @@ class Operation {
         }
     }
     substract() {
+        
+        if (numA && !repeatsSymbol) {
+            //   operatore = "+" //crear variable operator
+            //   operation(numA, operatore) //cuando queremos ejecutar la funcion
+
+            values.push(parseInt(numA))
+            display.value = total;
+            currentValue = 0;
+            total -= values[values.length - 1]; //ESTO DELEGARLO a operation()
+            display.value = total;
+        }
     }
     multiply() {
     }
@@ -155,7 +167,46 @@ document.getElementById('+').addEventListener('click', () => {
 
 
 })
-document.getElementById('-')
+document.getElementById('-').addEventListener('click', () => {
+    const operation = new Operation();
+
+    wasEqualBefore = false;
+
+    if (anyDigit[anyDigit.length - 1] && anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("+") && anyDigit[anyDigit.length - 1].includes("+")) {
+        console.log("el ultimo fue un igual por tanto aceptamos otro numero normalmente")
+        repeatsSymbol = true;
+
+        //REDUNDANTE Y MAL PORQUE DE POR SI SI ENTRAMOS ACA HABRIA SIDO PUSHEADO EL SIMBOLO
+        if (symbol[symbol.length - 1].includes("-")) {
+
+        }
+    } else if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("=")) {
+        wasEqualBefore = true;
+        console.log("Before + there was =")
+
+    }
+
+    // operation.sum
+
+    //YA SE ESTA REASIGNANDO BIEN EL ULTIMO NUMERO
+    // ESTE CODIGO VA DENTRO DE OPERATION.SUM O ESTA BIEN ACA? YA QUE BLOQUEA SUM DE HACER ALGO Y REASIGNA EL VALOR
+    //O NO REASIGNA NADA? VER BIEN
+    if (wasEqualBefore) {
+        console.log("total +=  Last value entered after +")
+        numA = currentValue
+        console.log("Este es el operando que se recicla " + numA)
+        if (repeatsSymbol) {
+            console.log("hacer nada")
+        } else {
+        }
+    } else {
+        wasEqualBefore = false
+        operation.sum();
+    }
+    wasEqualBefore = false
+
+
+})
 document.getElementById('/')
 document.getElementById('X')
 document.getElementById('%')
@@ -187,7 +238,7 @@ document.getElementById('=').addEventListener('click', () => {
     switch (true) {
         case currentOperation.includes("+"): operation.sum();
             break;
-        case currentOperation.includes("-"): alert('es una resta!');
+        case currentOperation.includes("-"): operation.substract();
             break;
         case currentOperation.includes("X"): alert('es una multiplicación!');
             break;
