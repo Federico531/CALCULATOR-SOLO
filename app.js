@@ -101,7 +101,7 @@ class Operation {
         }
     }
     substract() {
-        
+
         if (numA && !repeatsSymbol) {
             //   operatore = "+" //crear variable operator
             //   operation(numA, operatore) //cuando queremos ejecutar la funcion
@@ -262,46 +262,9 @@ document.getElementById('calculator').addEventListener('click', (e) => {
     if (isOn) {
         if (isNumber(digit)) {
             //FUNCTION TYPENUMBER
-            repeatsSymbol = false;
-            digit = parseInt(digit);
-
-            if (display.value === "0") {
-                display.value = ""
-                display.value += digit
-            } else {
-                /*BUG
-                a- Cuando trato de escribir 11 + 111 --> se borra al 3er numero
-                b- porque se cumple la condicion abajo porque
-                c- en la operación sum se asigna y se mezclan los 3 valores
-                */
-                if (values[values.length - 1] == display.value || display.value == total) {
-                    display.value = "";
-                    display.value += digit
-                } else {
-                    display.value += digit
-                }
-            }
-            numA = display.value
-            anyDigit.push(numA);
-
+            numberPressed(digit)
         } else if (isSymbol(digit)) {
-            if (!digit.includes("=")) {
-                anyDigit.push(digit);
-                symbol.push(digit)
-                console.log("incluimos este simbolo" + symbol[symbol.length - 1])
-                currentOperation = symbol[symbol.length - 1];
-            }else{
-                anyDigit.push(digit);
-            }
-
-            if (symbol[symbol.length - 1] == symbol[symbol.length - 2] && !digit.includes("=") && digit == symbol[symbol.length - 1]) {
-                console.log("repitio")
-                repeatsSymbol = true;
-
-            } else if (!symbol || digit !== symbol[symbol.length - 1] || anyDigit[anyDigit.length - 1] !== symbol[symbol.length - 1]) {
-
-
-            }
+            symbolPressed(digit);
         } else {
             console.log("NO ES UN BOTÓN")
         }
@@ -333,6 +296,49 @@ function isSymbol(digit) {
     }
 }
 
+function numberPressed(digit) {
+    repeatsSymbol = false;
+    digit = parseInt(digit);
+
+    if (display.value === "0") {
+        display.value = ""
+        display.value += digit
+    } else {
+        /*BUG
+        a- Cuando trato de escribir 11 + 111 --> se borra al 3er numero
+        b- porque se cumple la condicion abajo porque
+        c- en la operación sum se asigna y se mezclan los 3 valores
+        */
+        if (values[values.length - 1] == display.value || display.value == total) {
+            display.value = "";
+            display.value += digit
+        } else {
+            display.value += digit
+        }
+    }
+    numA = display.value
+    anyDigit.push(numA);
+}
+
+function symbolPressed(digit) {
+    if (!digit.includes("=")) {
+        anyDigit.push(digit);
+        symbol.push(digit)
+        console.log("incluimos este simbolo" + symbol[symbol.length - 1])
+        currentOperation = symbol[symbol.length - 1];
+    } else {
+        anyDigit.push(digit);
+    }
+
+    if (symbol[symbol.length - 1] == symbol[symbol.length - 2] && !digit.includes("=") && digit == symbol[symbol.length - 1]) {
+        console.log("repitio")
+        repeatsSymbol = true;
+
+    } else if (!symbol || digit !== symbol[symbol.length - 1] || anyDigit[anyDigit.length - 1] !== symbol[symbol.length - 1]) {
+
+
+    }
+}
 document.getElementById("ON/C").addEventListener('click', () => {
     isOn = true;
     display.value = "0"
