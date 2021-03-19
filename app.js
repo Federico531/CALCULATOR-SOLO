@@ -239,14 +239,8 @@ document.getElementById('=').addEventListener('click', () => {
 document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
-        if (isNumber(digit)) {
-            //FUNCTION TYPENUMBER
-            numberPressed(digit)
-        } else if (isSymbol(digit)) {
-            symbolPressed(digit);
-        } else {
-            console.log("NO ES UN BOTÓN")
-        }
+        if (isNumber(digit)) return numberPressed(digit)
+        if (isSymbol(digit)) return symbolPressed(digit);
     }
 })
 
@@ -275,7 +269,7 @@ function isSymbol(digit) {
     }
 }
 
-function numberPressed(digit){
+function numberPressed(digit) {
     repeatsSymbol = false;
     digit = parseInt(digit);
 
@@ -299,7 +293,7 @@ function numberPressed(digit){
     anyDigit.push(numA);
 }
 
-function symbolPressed(digit){
+function symbolPressed(digit) {
     if (!digit.includes("=")) {
         anyDigit.push(digit);
         symbol.push(digit)
