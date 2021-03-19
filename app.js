@@ -118,7 +118,7 @@ class Operation {
     divide() {
     }
     equals() {
-
+        //sirve de algo este codigo?
         console.log(symbol.length)
         if (symbol[symbol.length - 1].includes("+")) {
             this.sum()
@@ -212,29 +212,10 @@ document.getElementById('X')
 document.getElementById('%')
 
 document.getElementById('=').addEventListener('click', () => {
-    const operation = new Operation();
     anyDigit.push('=')
-    switch (true) {
-        case currentOperation.includes("+"): operation.sum();
-            break;
-        case currentOperation.includes("-"): operation.substract();
-            break;
-        case currentOperation.includes("X"): alert('es una multiplicación!');
-            break;
-        case currentOperation.includes("/"): alert('es una division!');
-            break;
-        case currentOperation.includes("%"): alert('es un porcentaje!');
-            break;
-        case anydigit[anyDigit.length - 1].includes("="): operation.equals();
-            break;
-        default: alert('no es un simbolo valido');
-    }
-    //}
+    operation();
     display.value = total;
-
 })
-
-//NUMBER DISPLAY
 
 document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
@@ -243,7 +224,6 @@ document.getElementById('calculator').addEventListener('click', (e) => {
         if (isSymbol(digit)) return symbolPressed(digit);
     }
 })
-
 function isNumber(digit) {
     for (var i = 0; i < 10; i++) {
         var number = digit.includes(i.toString());
@@ -253,7 +233,6 @@ function isNumber(digit) {
         }
     }
 }
-
 function isSymbol(digit) {
     //crep que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
     const sums = digit.includes("+");
@@ -268,7 +247,6 @@ function isSymbol(digit) {
         return false;
     }
 }
-
 function numberPressed(digit) {
     repeatsSymbol = false;
     digit = parseInt(digit);
@@ -292,7 +270,6 @@ function numberPressed(digit) {
     numA = display.value
     anyDigit.push(numA);
 }
-
 function symbolPressed(digit) {
     if (!digit.includes("=")) {
         anyDigit.push(digit);
@@ -312,6 +289,25 @@ function symbolPressed(digit) {
 
     }
 }
+//make operation receive digit
+function operation(digit) {
+    const operation = new Operation();
+    switch (true) {
+        case currentOperation.includes("+"): operation.sum();
+            break;
+        case currentOperation.includes("-"): operation.substract();
+            break;
+        case currentOperation.includes("X"): alert('es una multiplicación!');
+            break;
+        case currentOperation.includes("/"): alert('es una division!');
+            break;
+        case currentOperation.includes("%"): alert('es un porcentaje!');
+            break;
+        case anydigit[anyDigit.length - 1].includes("="): operation.equals();
+            break;
+        default: alert('no es un simbolo valido');
+    }
+}
 document.getElementById("ON/C").addEventListener('click', () => {
     isOn = true;
     display.value = "0"
@@ -321,7 +317,6 @@ document.getElementById("ON/C").addEventListener('click', () => {
         console.log("prendido")
     }
 })
-
 document.getElementById("OFF").addEventListener('click', () => {
     isOn = false;
     display.value = ""
