@@ -214,27 +214,6 @@ document.getElementById('%')
 document.getElementById('=').addEventListener('click', () => {
     const operation = new Operation();
     anyDigit.push('=')
-    //ESTO ESTA MAL PORQUE NO HABRIAMOS ENTRADO ACA DE NO SER POR UN PRIMER CLICK EN =
-    //PENSARLO BIEN
-    //SI EL ULTIMO SIMBOLO NO ES = GUARDAMOS EN LA CONSTANTE
-
-    //if (anyanyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
-
-
-    if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 1].includes("=") && anyDigit[anyDigit.length - 2].includes("=")) {
-        repeatsEqual = true;
-        console.log("repite igual")
-        //ACA DEBERIA REASIGNAR NUM Y REPETIR HACER TOTAL OPERATOR NUMA = TOTAL 
-        //"1" "+" "1" "=" (2) "=" (3) "=" (4    )
-
-    } else {
-        repeatsEqual = false; //no se si sirve, por las dudas tengamoslo mano
-    }
-    console.log("esto es current operation" + currentOperation)
-    /*
-    Cuando toco dos veces equals repite la ultima operación diferente a equals 
-    */
-
     switch (true) {
         case currentOperation.includes("+"): operation.sum();
             break;
@@ -296,7 +275,7 @@ function isSymbol(digit) {
     }
 }
 
-function numberPressed(digit) {
+function numberPressed(digit){
     repeatsSymbol = false;
     digit = parseInt(digit);
 
@@ -320,7 +299,7 @@ function numberPressed(digit) {
     anyDigit.push(numA);
 }
 
-function symbolPressed(digit) {
+function symbolPressed(digit){
     if (!digit.includes("=")) {
         anyDigit.push(digit);
         symbol.push(digit)
