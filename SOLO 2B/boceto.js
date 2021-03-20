@@ -7,13 +7,14 @@ var numB;
 var operator;
 var total;
 var lastOperator;
+var repeatsOperation = false;
 
 class Operation {
     sum() {
         total = parseInt(numA) + parseInt(numB)
         console.log("result: " + total);
     }
-    substract(){
+    substract() {
         total = parseInt(numA) - parseInt(numB)
     }
 }
@@ -29,9 +30,17 @@ function assignDigits(digit) {
     if (!numA && isNumber(digit)) {
         numA = digit;
         console.log("assigned numA: " + numA)
-    } else if (numA && !operator && isSymbol(digit)) {
+    } else if (numA && !operator && isSymbol(digit) || operator && operator == lastOperator && isSymbol(digit)) {
         operator = digit
-        console.log("assigned operator: " + operator)
+        console.log("este es lastoperatore" + lastOperator)
+        if (lastOperator == operator) {
+            alert("repeats " + lastOperator)
+        } else {
+            lastOperator = operator;
+            console.log("assigned operator: " + operator)
+
+        }
+
     } else if (numA && operator && !numB && isNumber(digit)) {
         numB = digit
         console.log("assigned numB: " + numB)
@@ -40,8 +49,9 @@ function assignDigits(digit) {
         operator = "";
         numB = "";
         console.log("All empty \nnumA:" + numA + "\nOperator: " + operator + "\nnumB: " + numB)
-    } else {
-        alert("no corresponde")
+        console.log("este es lastoperator" + lastOperator)
+    } else if (lastOperator == digit) {
+        alert("repite " + operator)
 
     }
 }
