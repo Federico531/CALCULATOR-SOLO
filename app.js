@@ -1,34 +1,4 @@
-/*
-
-"" when I press the button
-() --> result
-FIX THIS BUGS!!
-
-B- FUNCIONA ASI           "2" "+" "3" "=" (5) "4" "=" (9)
-                                    -->5 + 4 (MAL)
-
-DEBERIA FUNCIONAR ASI  "2" "+" "3" "=" (5) "4" "=" (7)
-                                        --> 4 + 3 (Es decir que numB hace la misma operación sobre el nuevo numero)
-                                        --> Y siempre que presione "=" "numero" se genera esta sustitución 
-
-//DONDE EJECUTAMOS ESTO?
-//EN operation.equal o en click.("=")??
-
-
-                            B. 2 "+" "=" (4) "+" (8)
-          <--OK  "+" Should take new input and sum it with previous total   
-
-IS NOT BUG
-C. 2 "+" "=" (4) 
-D. 2 "+" 2 "+" (4) "+" "=" (8) "="  "=" alert(=)
-                     <--OK "="           
-
-*/
-/*
-REFACTOR -->Cuando tengo que cambiar variable symbola a operation,
-tengo que cambiarla en todos lados porque entra siempre como variable global
-en vez de como parametro de una funcion
-*/
+//TO DO AT THE END
 
 const display = document.getElementById('display')
 var isOn = false
@@ -50,32 +20,6 @@ var numB;
 var operatore;
 
 
-//DONDE IRIA ESTE CODIGO?
-// EN ('=') PODRIA IR (PODRIA VOLVERSE UNA FUNCION LUEGO PARA NO REPETIR EL CODIGO)
-// 
-//
-
-//NO REALICE ESTA ACCIÓN YA? REVISAR
-if (symbol[symbol.length - 2] == symbol[symbol.length - 1]) {
-    //HACER NADA
-} else if (symbol[symbol.length - 2] != symbol[symbol.lenth - 1] && symbol.length > 2) {
-    //REALIZAR LA OPERACIÓN QUE CORRESPONDA AL ULTIMO SIMBOLO
-}
-
-
-//BOCETO DE OPERATION
-function operation(a, operator, b) {
-    //Si el 
-    if (!operator && !b) {
-        numA = a;
-    } else if (!b) {
-        var simbolo = operator
-    } else if (a & operator & b) {
-        var numB = b;
-    }
-    if (operator == "+") {
-    }
-}
 
 class Operation {
     sum() {
@@ -130,23 +74,7 @@ class Operation {
 }
 
 //ARITHMETICS
-document.getElementById("ON/C").addEventListener('click', () => {
-    isOn = true;
-    display.value = "0"
-    if (isOn) {
-        total = 0;
-        values = [];
-        console.log("prendido")
-    }
-})
-document.getElementById("OFF").addEventListener('click', () => {
-    isOn = false;
-    display.value = ""
-    if (!isOn) {
-        //MAKE TOAST SI NO PRENDE EN 10 SEGUNDOS O HACEN CLICK CON LA CALCU APAGADA
-        console.log("apagado")
-    }
-})
+
 document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
@@ -244,8 +172,25 @@ document.getElementById('=').addEventListener('click', () => {
     operation();
     display.value = total;
 })
-
-
+//make operation receive digit
+function operation(digit) {
+    const operation = new Operation();
+    switch (true) {
+        case currentOperation.includes("+"): operation.sum();
+            break;
+        case currentOperation.includes("-"): operation.substract();
+            break;
+        case currentOperation.includes("X"): alert('es una multiplicación!');
+            break;
+        case currentOperation.includes("/"): alert('es una division!');
+            break;
+        case currentOperation.includes("%"): alert('es un porcentaje!');
+            break;
+        case anydigit[anyDigit.length - 1].includes("="): operation.equals();
+            break;
+        default: alert('no es un simbolo valido');
+    }
+}
 function isNumber(digit) {
     for (var i = 0; i < 10; i++) {
         var number = digit.includes(i.toString());
@@ -253,20 +198,6 @@ function isNumber(digit) {
         } else {
             return true
         }
-    }
-}
-function isSymbol(digit) {
-    //crep que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
-    const sums = digit.includes("+");
-    const substracts = digit.includes("-");
-    const multiplies = digit.includes("X");
-    const divides = digit.includes("/");
-    const percentages = digit.includes("%");
-    const equals = digit.includes("=");
-    if (sums || substracts || multiplies || divides || percentages || equals) {
-        return true;
-    } else {
-        return false;
     }
 }
 function numberPressed(digit) {
@@ -292,6 +223,20 @@ function numberPressed(digit) {
     numA = display.value
     anyDigit.push(numA);
 }
+function isSymbol(digit) {
+    //crep que se puede armar algun objeto con metodos, y hacer map de esos metodos hasta que alguno de true?
+    const sums = digit.includes("+");
+    const substracts = digit.includes("-");
+    const multiplies = digit.includes("X");
+    const divides = digit.includes("/");
+    const percentages = digit.includes("%");
+    const equals = digit.includes("=");
+    if (sums || substracts || multiplies || divides || percentages || equals) {
+        return true;
+    } else {
+        return false;
+    }
+}
 function symbolPressed(digit) {
     if (!digit.includes("=")) {
         anyDigit.push(digit);
@@ -311,22 +256,103 @@ function symbolPressed(digit) {
 
     }
 }
-//make operation receive digit
-function operation(digit) {
-    const operation = new Operation();
-    switch (true) {
-        case currentOperation.includes("+"): operation.sum();
-            break;
-        case currentOperation.includes("-"): operation.substract();
-            break;
-        case currentOperation.includes("X"): alert('es una multiplicación!');
-            break;
-        case currentOperation.includes("/"): alert('es una division!');
-            break;
-        case currentOperation.includes("%"): alert('es un porcentaje!');
-            break;
-        case anydigit[anyDigit.length - 1].includes("="): operation.equals();
-            break;
-        default: alert('no es un simbolo valido');
+document.getElementById("ON/C").addEventListener('click', () => {
+    isOn = true;
+    display.value = "0"
+    if (isOn) {
+        total = 0;
+        values = [];
+        console.log("prendido")
+    }
+})
+document.getElementById("OFF").addEventListener('click', () => {
+    isOn = false;
+    display.value = ""
+    if (!isOn) {
+        //MAKE TOAST SI NO PRENDE EN 10 SEGUNDOS O HACEN CLICK CON LA CALCU APAGADA
+        console.log("apagado")
+    }
+})
+//meter dentro de un loop para que funcione 3 veces?? pero como iria recibiendo
+if (!numA && isNumber(digit)) {
+
+}
+
+/*
+TODO
+----------------------------------
+ESTA PASANDO QUE
+"F5" + "ON"
+"1" "+" "1" (11) <-- SE CONCATENA EN VEZ DE RECIBIR SEGUNDO PARAMETRO
+
+PLAN
+
+RECIBE numA --> se pushea numA cuando se ingresa el operator
+RECIBE Operator --> numA = anyDigit[anyDigit.length - 2]
+            operator = anyDigit[anyDigit.length - 1]
+RECIBE numB
+RECIBE operator --> numA= numB; operator = ""; numB = undefined;
+
+
+//BOCETO B DE CONDICIONALES DE OPERATION
+function operation(a, operator, b) {
+    //Si el
+    if (!operator && !b) {
+        numA = a;
+    } else if (!b) {
+        var simbolo = operator
+    } else if (a & operator & b) {
+        var numB = b;
+    }
+    if (operator == "+") {
     }
 }
+
+---------------------------------
+
+"" when I press the button
+() --> result
+FIX THIS BUGS!!
+------------------------------------------
+B- FUNCIONA ASI           "2" "+" "3" "=" (5) "4" "=" (9)
+                                    -->5 + 4 (MAL)
+
+DEBERIA FUNCIONAR ASI  "2" "+" "3" "=" (5) "4" "=" (7)
+                                        --> 4 + 3 (Es decir que numB hace la misma operación sobre el nuevo numero)
+                                        --> Y siempre que presione "=" "numero" se genera esta sustitución
+
+--------------------------------------------
+
+//DONDE EJECUTAMOS ESTO?
+//EN operation.equal o en click.("=")??
+
+
+                            B. 2 "+" "=" (4) "+" (8)
+          <--OK  "+" Should take new input and sum it with previous total
+
+IS NOT BUG
+C. 2 "+" "=" (4)
+D. 2 "+" 2 "+" (4) "+" "=" (8) "="  "=" alert(=)
+                     <--OK "="
+
+*/
+/*
+REFACTOR -->Cuando tengo que cambiar variable symbola a operation,
+tengo que cambiarla en todos lados porque entra siempre como variable global
+en vez de como parametro de una funcion
+-------------------------------------------
+
+
+//DONDE IRIA ESTE CODIGO?
+// EN ('=') PODRIA IR (PODRIA VOLVERSE UNA FUNCION LUEGO PARA NO REPETIR EL CODIGO)
+// 
+//
+
+//NO REALICE ESTA ACCIÓN YA? REVISAR
+if (symbol[symbol.length - 2] == symbol[symbol.length - 1]) {
+    //HACER NADA
+} else if (symbol[symbol.length - 2] != symbol[symbol.lenth - 1] && symbol.length > 2) {
+    //REALIZAR LA OPERACIÓN QUE CORRESPONDA AL ULTIMO SIMBOLO
+}
+
+*/
