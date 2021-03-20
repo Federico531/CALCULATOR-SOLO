@@ -262,22 +262,7 @@ document.getElementById("OFF").addEventListener('click', () => {
 })
 //meter dentro de un loop para que funcione 3 veces?? pero como iria recibiendo
 //ASSIGNING OPERATOR AND OPERANDUM
-if (!numA && isNumber(digit)) {
-    numA = digit;
-}
-if(numA && isSymbol(digit)){
-    oeprator = digit
-}
-if(numA && operator){
-    numB = digit
-}
-if(numA && operator && numB){
 
-    operation
-    numA = numB
-    operator = ""
-    numB = undefined;
-}
 
 /*
 TODO
