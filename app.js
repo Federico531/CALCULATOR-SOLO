@@ -1,20 +1,28 @@
 /*
+
 "" when I press the button
 () --> result
 FIX THIS BUGS!!
+
 B- FUNCIONA ASI           "2" "+" "3" "=" (5) "4" "=" (9)
                                     -->5 + 4 (MAL)
+
 DEBERIA FUNCIONAR ASI  "2" "+" "3" "=" (5) "4" "=" (7)
                                         --> 4 + 3 (Es decir que numB hace la misma operación sobre el nuevo numero)
                                         --> Y siempre que presione "=" "numero" se genera esta sustitución 
+
 //DONDE EJECUTAMOS ESTO?
 //EN operation.equal o en click.("=")??
+
+
                             B. 2 "+" "=" (4) "+" (8)
           <--OK  "+" Should take new input and sum it with previous total   
+
 IS NOT BUG
 C. 2 "+" "=" (4) 
 D. 2 "+" 2 "+" (4) "+" "=" (8) "="  "=" alert(=)
                      <--OK "="           
+
 */
 /*
 REFACTOR -->Cuando tengo que cambiar variable symbola a operation,
@@ -29,7 +37,7 @@ var currentOperation;
 var values = [];
 var total = 0;
 var symbol = [];
-var repeatsSymbol = false;
+var repeatsSymbol = true;
 var repeatsEqual = false;
 var wasEqualBefore = false;
 //Refactor values not asigned 
@@ -41,8 +49,6 @@ var numA;
 var numB;
 var operatore;
 
-//SI EL ANTEULTIMO SIMBOLO EXISTE Y ES IGUAL AL ULTIMO SIMBOLO, DEJAR TODO IGUAL
-//SI ES DIFERENTE, Y EXISTEN MAS DE DOS SIMBOLOS EN SIMBOLO, ASIGNAR EL SIMBOLO A OPERATOR
 
 //DONDE IRIA ESTE CODIGO?
 // EN ('=') PODRIA IR (PODRIA VOLVERSE UNA FUNCION LUEGO PARA NO REPETIR EL CODIGO)
@@ -73,34 +79,41 @@ function operation(a, operator, b) {
 
 class Operation {
     sum() {
+        if (symbol.length == 0) {
+            //Don't operate when first symbol
+        } else {
+            if (numA && !repeatsSymbol) {
+                //   operatore = "+" //crear variable operator
+                //   operation(numA, operatore) //cuando queremos ejecutar la funcion
+                values.push(parseInt(numA))
+                display.value = total;
+                currentValue = 0;
+                total += values[values.length - 1]; //ESTO DELEGARLO a operation()
+                display.value = total;
+            }
+            if (repeatsSymbol) {
+                console.log("nada")
+            }
 
-        //BOCETO DEL CONDITIONAL
-        /*
-        ACA IRIA EL CODIGO QUE REASIGNA if repeats equal numA
-        */
-
-        if (numA && !repeatsSymbol) {
-            //   operatore = "+" //crear variable operator
-            //   operation(numA, operatore) //cuando queremos ejecutar la funcion
-
-            values.push(parseInt(numA))
-            display.value = total;
-            currentValue = 0;
-            total += values[values.length - 1]; //ESTO DELEGARLO a operation()
-            display.value = total;
         }
     }
     substract() {
+        if (symbol.length == 0) {
+            //Don't operate when first symbol
+        } else {
+            if (numA && !repeatsSymbol) {
+                //   operatore = "+" //crear variable operator
+                //   operation(numA, operatore) //cuando queremos ejecutar la funcion
+                values.push(parseInt(numA))
+                display.value = total;
+                currentValue = 0;
+                total -= values[values.length - 1]; //ESTO DELEGARLO a operation()
+                display.value = total;
+            }
+            if (repeatsSymbol) {
+                console.log("nada")
+            }
 
-        if (numA && !repeatsSymbol) {
-            //   operatore = "+" //crear variable operator
-            //   operation(numA, operatore) //cuando queremos ejecutar la funcion
-
-            values.push(parseInt(numA))
-            display.value = total;
-            currentValue = 0;
-            total -= values[values.length - 1]; //ESTO DELEGARLO a operation()
-            display.value = total;
         }
     }
     multiply() {
@@ -117,6 +130,30 @@ class Operation {
 }
 
 //ARITHMETICS
+document.getElementById("ON/C").addEventListener('click', () => {
+    isOn = true;
+    display.value = "0"
+    if (isOn) {
+        total = 0;
+        values = [];
+        console.log("prendido")
+    }
+})
+document.getElementById("OFF").addEventListener('click', () => {
+    isOn = false;
+    display.value = ""
+    if (!isOn) {
+        //MAKE TOAST SI NO PRENDE EN 10 SEGUNDOS O HACEN CLICK CON LA CALCU APAGADA
+        console.log("apagado")
+    }
+})
+document.getElementById('calculator').addEventListener('click', (e) => {
+    var digit = e.target.childNodes[0].nodeValue
+    if (isOn) {
+        if (isNumber(digit)) return numberPressed(digit)
+        if (isSymbol(digit)) return symbolPressed(digit);
+    }
+})
 document.getElementById('+').addEventListener('click', () => {
     const operation = new Operation();
 
@@ -167,7 +204,7 @@ document.getElementById('-').addEventListener('click', () => {
         repeatsSymbol = true;
 
         //REDUNDANTE Y MAL PORQUE DE POR SI SI ENTRAMOS ACA HABRIA SIDO PUSHEADO EL SIMBOLO
-        if (symbol[symbol.length - 1].includes("-")) {
+        if (symbol[symbol.length - 1].includes("+")) {
 
         }
     } else if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("=")) {
@@ -196,24 +233,19 @@ document.getElementById('-').addEventListener('click', () => {
     wasEqualBefore = false
 
 
-})
-document.getElementById('/')
-document.getElementById('X')
-document.getElementById('%')
 
+})
+document.getElementById('X')
+document.getElementById('/')
+document.getElementById('%')
+document.getElementById('.')
 document.getElementById('=').addEventListener('click', () => {
     anyDigit.push('=')
     operation();
     display.value = total;
 })
 
-document.getElementById('calculator').addEventListener('click', (e) => {
-    var digit = e.target.childNodes[0].nodeValue
-    if (isOn) {
-        if (isNumber(digit)) return numberPressed(digit)
-        if (isSymbol(digit)) return symbolPressed(digit);
-    }
-})
+
 function isNumber(digit) {
     for (var i = 0; i < 10; i++) {
         var number = digit.includes(i.toString());
@@ -298,20 +330,3 @@ function operation(digit) {
         default: alert('no es un simbolo valido');
     }
 }
-document.getElementById("ON/C").addEventListener('click', () => {
-    isOn = true;
-    display.value = "0"
-    if (isOn) {
-        total = 0;
-        values = [];
-        console.log("prendido")
-    }
-})
-document.getElementById("OFF").addEventListener('click', () => {
-    isOn = false;
-    display.value = ""
-    if (!isOn) {
-        //MAKE TOAST SI NO PRENDE EN 10 SEGUNDOS O HACEN CLICK CON LA CALCU APAGADA
-        console.log("apagado")
-    }
-})
