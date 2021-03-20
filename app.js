@@ -1,5 +1,7 @@
 //TO DO AT THE END
 
+//BIG BUG
+//"F5" "ON" "1"" + "1" (11) <-- WRONG ! "1" "+" (12) <-- OK!
 const display = document.getElementById('display')
 var isOn = false
 var currentValue;
@@ -19,8 +21,6 @@ var numA;
 var numB;
 var operatore;
 
-
-
 class Operation {
     sum() {
         if (symbol.length == 0) {
@@ -38,7 +38,6 @@ class Operation {
             if (repeatsSymbol) {
                 console.log("nada")
             }
-
         }
     }
     substract() {
@@ -57,7 +56,6 @@ class Operation {
             if (repeatsSymbol) {
                 console.log("nada")
             }
-
         }
     }
     multiply() {
@@ -72,7 +70,6 @@ class Operation {
         }
     }
 }
-
 //ARITHMETICS
 
 document.getElementById('calculator').addEventListener('click', (e) => {
@@ -93,7 +90,7 @@ document.getElementById('+').addEventListener('click', () => {
 
         //REDUNDANTE Y MAL PORQUE DE POR SI SI ENTRAMOS ACA HABRIA SIDO PUSHEADO EL SIMBOLO
         if (symbol[symbol.length - 1].includes("+")) {
-
+            //WHAT FOR?
         }
     } else if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("=")) {
         wasEqualBefore = true;
@@ -102,7 +99,6 @@ document.getElementById('+').addEventListener('click', () => {
     }
 
     // operation.sum
-
     //YA SE ESTA REASIGNANDO BIEN EL ULTIMO NUMERO
     // ESTE CODIGO VA DENTRO DE OPERATION.SUM O ESTA BIEN ACA? YA QUE BLOQUEA SUM DE HACER ALGO Y REASIGNA EL VALOR
     //O NO REASIGNA NADA? VER BIEN
@@ -119,8 +115,6 @@ document.getElementById('+').addEventListener('click', () => {
         operation.sum();
     }
     wasEqualBefore = false
-
-
 })
 document.getElementById('-').addEventListener('click', () => {
     const operation = new Operation();
@@ -130,7 +124,6 @@ document.getElementById('-').addEventListener('click', () => {
     if (anyDigit[anyDigit.length - 1] && anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("-") && anyDigit[anyDigit.length - 1].includes("-")) {
         console.log("el ultimo fue un igual por tanto aceptamos otro numero normalmente")
         repeatsSymbol = true;
-
         //REDUNDANTE Y MAL PORQUE DE POR SI SI ENTRAMOS ACA HABRIA SIDO PUSHEADO EL SIMBOLO
         if (symbol[symbol.length - 1].includes("+")) {
 
@@ -138,11 +131,9 @@ document.getElementById('-').addEventListener('click', () => {
     } else if (anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("=")) {
         wasEqualBefore = true;
         console.log("Before + there was =")
-
     }
 
     // operation.sum
-
     //YA SE ESTA REASIGNANDO BIEN EL ULTIMO NUMERO
     // ESTE CODIGO VA DENTRO DE OPERATION.SUM O ESTA BIEN ACA? YA QUE BLOQUEA SUM DE HACER ALGO Y REASIGNA EL VALOR
     //O NO REASIGNA NADA? VER BIEN
@@ -159,9 +150,6 @@ document.getElementById('-').addEventListener('click', () => {
         operation.substract();
     }
     wasEqualBefore = false
-
-
-
 })
 document.getElementById('X')
 document.getElementById('/')
@@ -252,8 +240,7 @@ function symbolPressed(digit) {
         repeatsSymbol = true;
 
     } else if (!symbol || digit !== symbol[symbol.length - 1] || anyDigit[anyDigit.length - 1] !== symbol[symbol.length - 1]) {
-
-
+        //WHAT FOR?
     }
 }
 document.getElementById("ON/C").addEventListener('click', () => {
@@ -274,6 +261,7 @@ document.getElementById("OFF").addEventListener('click', () => {
     }
 })
 //meter dentro de un loop para que funcione 3 veces?? pero como iria recibiendo
+//ASSIGNING OPERATOR AND OPERANDUM
 if (!numA && isNumber(digit)) {
 
 }
