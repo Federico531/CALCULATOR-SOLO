@@ -70,8 +70,8 @@ class Operation {
         }
     }
 }
-//ARITHMETICS
 
+//ARITHMETICS
 document.getElementById('calculator').addEventListener('click', (e) => {
     var digit = e.target.childNodes[0].nodeValue
     if (isOn) {
@@ -157,11 +157,11 @@ document.getElementById('%')
 document.getElementById('.')
 document.getElementById('=').addEventListener('click', () => {
     anyDigit.push('=')
-    operation();
+    equalOperation();
     display.value = total;
 })
 //make operation receive digit
-function operation(digit) {
+function equalOperation(digit) {
     const operation = new Operation();
     switch (true) {
         case currentOperation.includes("+"): operation.sum();
@@ -263,7 +263,20 @@ document.getElementById("OFF").addEventListener('click', () => {
 //meter dentro de un loop para que funcione 3 veces?? pero como iria recibiendo
 //ASSIGNING OPERATOR AND OPERANDUM
 if (!numA && isNumber(digit)) {
+    numA = digit;
+}
+if(numA && isSymbol(digit)){
+    oeprator = digit
+}
+if(numA && operator){
+    numB = digit
+}
+if(numA && operator && numB){
 
+    operation
+    numA = numB
+    operator = ""
+    numB = undefined;
 }
 
 /*
