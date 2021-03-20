@@ -1,28 +1,20 @@
 /*
-
 "" when I press the button
 () --> result
 FIX THIS BUGS!!
-
 B- FUNCIONA ASI           "2" "+" "3" "=" (5) "4" "=" (9)
                                     -->5 + 4 (MAL)
-
 DEBERIA FUNCIONAR ASI  "2" "+" "3" "=" (5) "4" "=" (7)
                                         --> 4 + 3 (Es decir que numB hace la misma operación sobre el nuevo numero)
                                         --> Y siempre que presione "=" "numero" se genera esta sustitución 
-
 //DONDE EJECUTAMOS ESTO?
 //EN operation.equal o en click.("=")??
-
-
                             B. 2 "+" "=" (4) "+" (8)
           <--OK  "+" Should take new input and sum it with previous total   
-
 IS NOT BUG
 C. 2 "+" "=" (4) 
 D. 2 "+" 2 "+" (4) "+" "=" (8) "="  "=" alert(=)
                      <--OK "="           
-
 */
 /*
 REFACTOR -->Cuando tengo que cambiar variable symbola a operation,
@@ -84,9 +76,7 @@ class Operation {
 
         //BOCETO DEL CONDITIONAL
         /*
-
         ACA IRIA EL CODIGO QUE REASIGNA if repeats equal numA
-
         */
 
         if (numA && !repeatsSymbol) {
@@ -172,7 +162,7 @@ document.getElementById('-').addEventListener('click', () => {
 
     wasEqualBefore = false;
 
-    if (anyDigit[anyDigit.length - 1] && anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("+") && anyDigit[anyDigit.length - 1].includes("+")) {
+    if (anyDigit[anyDigit.length - 1] && anyDigit[anyDigit.length - 2] && anyDigit[anyDigit.length - 2].includes("-") && anyDigit[anyDigit.length - 1].includes("-")) {
         console.log("el ultimo fue un igual por tanto aceptamos otro numero normalmente")
         repeatsSymbol = true;
 
@@ -201,7 +191,7 @@ document.getElementById('-').addEventListener('click', () => {
         }
     } else {
         wasEqualBefore = false
-        operation.sum();
+        operation.substract();
     }
     wasEqualBefore = false
 
